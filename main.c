@@ -36,9 +36,9 @@ int	main(int ac, char **av)
 			if (ft_is_valid_nb(av[i]))
 			{
 				nbr = ft_atoi(av[i]);
+				ft_printf("%i\n", nbr);
 				tail -> next = ft_lst_new(&nbr);
 				tail = tail -> next;
-				i++;
 			}
 			else
 			{
@@ -49,7 +49,7 @@ int	main(int ac, char **av)
 				ft_printf("ERROR\n");
 				return (0);
 			}
-
+			i++;
 		}
 		tail = head;
 		head = head -> next;
