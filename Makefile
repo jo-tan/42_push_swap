@@ -15,6 +15,7 @@ SRCS		= $(wildcard *.c)
 OBJS		= $(SRCS:.c=.o)
 
 NAME		= push_swap.a
+EXEC		= push_swap
 
 CC			= cc
 RM			= rm -f
@@ -37,7 +38,7 @@ clean:
 			$(RM) $(OBJS) $(B_OBJS)
 
 fclean:		clean
-			$(RM) $(NAME)
+			$(RM) $(NAME) $(EXEC)
 
 re:		fclean all
 
