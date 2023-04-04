@@ -23,7 +23,7 @@ int	main(int ac, char **av)
 	int	i = 1;
 	t_list	*head; // a dummy head
 	t_list	*tail;
-	int		*nbr;
+	int		nbr;
 
 	head = ft_lst_new(NULL);
 	tail = head;
@@ -31,10 +31,27 @@ int	main(int ac, char **av)
 		return (0);
 	else
 	{
-		while (ac > 1)
+		while (i < ac)
 		{
-			nbr = ft_atoi(av[i])
+			if (ft_is_valid_nb(av[i]))
+			{
+				nbr = ft_atoi(av[i]);
+				tail -> next = ft_lst_new(&nbr);
+				tail = tail -> next;
+				i++;
+			}
+			else
+			{
+				ft_lst_delete(head);
+				ft_printf("ERROR\n");
+				return (0);
+			}
+
 		}
+		tail = head;
+		head = head -> next;
+		ft_lst_delete(head);
+		ft_printf("all nodes are freed.\n");
 	}
 	return (0);
 }

@@ -25,7 +25,11 @@ typedef struct s_list
 
 t_list	*ft_lst_new(int *data);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lst_delete(t_list *head);
+int	ft_is_valid_nb(const char *nptr);
 int		ft_atoi(const char *nptr);
+char	*ft_itoa(int n);
+char	*ft_strchr(const char *s, int c);
 int		ft_printf(const char *s, ...);
 int		ft_vprintf(const char s, va_list ap);
 int		ft_print_c(int c);

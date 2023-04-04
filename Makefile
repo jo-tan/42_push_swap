@@ -29,10 +29,10 @@ CFLAGS		= -Wall -Wextra -Werror
 $(NAME):	$(OBJS)
 			$(AR) $(NAME) $(OBJS)
 			$(RN) $(NAME)
-
-all:		$(NAME)
 			$(CC) $(CFLAGS) $(SRCS) -L. $(NAME) -o push_swap
 
+all:		$(NAME)
+			
 clean:
 			$(RM) $(OBJS) $(B_OBJS)
 

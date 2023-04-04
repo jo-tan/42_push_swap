@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_push_swap.h"
+
 int	ft_is_valid_nb(const char *nptr)
 {
 	if (!nptr || *nptr == '\0') // Parameter checking

@@ -33,10 +33,24 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		return ;
 	if (!lst)
 	{
-		ptr = &new;
+		*lst = new;
 		return ;
 	}
 	while (ptr -> next != NULL)
 		ptr = ptr -> next;
 	ptr -> next = new;
+}
+
+void	ft_lst_delete(t_list *head)
+{
+	t_list	*tmp;
+	/*if the head is not null, make temp as head and move head -> next,
+	then delete temp.
+	runn this until head is NULL*/
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head -> next;
+		free (tmp);
+	}
 }
