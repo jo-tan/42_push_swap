@@ -42,6 +42,9 @@ int	main(int ac, char **av)
 			}
 			else
 			{
+				tail = head;
+				head = head -> next;
+				free (tail);
 				ft_lst_delete(head);
 				ft_printf("ERROR\n");
 				return (0);
@@ -50,6 +53,7 @@ int	main(int ac, char **av)
 		}
 		tail = head;
 		head = head -> next;
+		free (tail);
 		ft_lst_delete(head);
 		ft_printf("all nodes are freed.\n");
 	}
