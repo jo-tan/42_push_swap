@@ -23,7 +23,7 @@ int	main(int ac, char **av)
 	int	i = 1;
 	t_list	*head; // a dummy head
 	t_list	*tail;
-	int		nbr;
+	int		*nbr = NULL;
 
 	head = ft_lst_new(NULL);
 	tail = head;
@@ -35,9 +35,12 @@ int	main(int ac, char **av)
 		{
 			if (ft_is_valid_nb(av[i]))
 			{
-				nbr = ft_atoi(av[i]);
-				ft_printf("%i\n", nbr);
-				tail -> next = ft_lst_new(&nbr);
+				nbr = malloc(sizeof(int));
+				if (!nbr)
+					return (0);
+				*nbr = ft_atoi(av[i]);
+				ft_printf("%i\n", *nbr);
+				tail -> next = ft_lst_new(nbr);
 				tail = tail -> next;
 			}
 			else

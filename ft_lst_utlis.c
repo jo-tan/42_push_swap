@@ -52,6 +52,7 @@ void	ft_lst_delete(t_list *head)
 		tmp = head;
 		ft_printf("%d will be freed\n", *(head -> data));
 		head = head -> next;
-		free (tmp);
+		free(tmp -> data);
+		free(tmp);
 	}
 }
