@@ -24,6 +24,7 @@ typedef struct s_list
 }	t_list;
 
 t_list	*ft_lst_new(int *data);
+void	ft_lstadd_front(t_list **lst, t_list *new);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lst_delete(t_list *head);
 int	ft_is_valid_nb(const char *nptr);
@@ -38,5 +39,9 @@ int		ft_print_d_i(int n);
 int		ft_print_u(unsigned int n);
 int		ft_print_x(unsigned int n, char c);
 int		ft_print_p(unsigned long n);
+
+/*Sorting functions*/
+t_list  *ft_create_lst_b(void);
+void	ft_pb(t_list *stack_a, t_list *stack_b);
 
 #endif

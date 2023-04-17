@@ -23,6 +23,7 @@ int	main(int ac, char **av)
 	int	i = 1;
 	t_list	*head; // a dummy head
 	t_list	*tail;
+	t_list	*b_head;
 	int		*nbr = NULL;
 
 	head = ft_lst_new(NULL);
@@ -57,8 +58,13 @@ int	main(int ac, char **av)
 		tail = head;
 		head = head -> next;
 		free (tail);
+		b_head = ft_create_lst_b();
+		ft_printf("Stack B is created. head value: %p\n", b_head -> data);
+		ft_pb(head, b_head);
 		ft_lst_delete(head);
-		ft_printf("all nodes are freed.\n");
+		ft_printf("Stack A: all nodes are freed.\n");
+		ft_lst_delete(b_head);
+		ft_printf("Stack B: all nodes are freed.\n");
 	}
 	return (0);
 }
