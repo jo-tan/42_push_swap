@@ -15,28 +15,40 @@
 t_list	*ft_create_lst_b(void)
 {
 	t_list	*b_head;
-
-	b_head = malloc(sizeof(t_list));
-	b_head -> data = NULL;
+	void		*dummy;
+	/*If b_head -> data == NULL, keep getting segfault 11.
+	Possible solution: write a specific struct for dummy head*/
+	dummy = malloc(sizeof(void *));
+	b_head = ft_lst_new(dummy);
 
 	return (b_head);
 }
 
 
-void	ft_pb(t_list *stack_a, t_list *stack_b)
+void	ft_pb(t_list **stack_a, t_list **stack_b)
 {
 	t_list	*tmp;
 
-	tmp = stack_a;
-	stack_a = stack_a -> next;
-	tmp -> next = NULL;
-	if (stack_b -> data == NULL)
-	{
-		stack_b -> next = tmp;
-		stack_b = stack_b -> next;
-	}
-	else
-	{
-		tmp -> next = stack_b;
-	}
+	if (*stack_a == NULL)
+		return ;
+	tmp = *stack_a;
+	*stack_a = (*stack_a) -> next;
+	tmp -> next = *stack_b;
+	*stack_b = tmp;
+}
+
+void	ft_swap(t_list **stack_b)
+{
+	t_list	*tmp_n1;
+	t_list	*tmp_n2;
+
+	if (*stack_b == NULL || (*stack_b) -> next == NULL)
+		return ;
+	tmp_n1 = *stack_b;
+	tmp_n2 = (*stack_b) -> next;
+
+	tmp_n1 -> next = tmp_n2 -> next;
+	tmp_n2 -> next = tmp_n1;
+
+	*stack_b = tmp_n2;
 }
