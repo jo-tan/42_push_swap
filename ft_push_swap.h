@@ -44,5 +44,7 @@ int		ft_print_p(unsigned long n);
 t_list  *ft_create_lst_b(void);
 void	ft_pb(t_list **stack_a, t_list **stack_b);
 void	ft_swap(t_list **stack_b);
+void	ft_rotate(t_list **stack);
+void	ft_rr(t_list **stack_a, t_list **stack_b);
 
 #endif

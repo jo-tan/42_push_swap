@@ -65,6 +65,7 @@ int	main(int ac, char **av)
 		ft_pb(&a_head, &b_head);
 		ft_swap(&a_head);
 		ft_swap(&b_head);
+		ft_rr(&a_head, &b_head);
 		ft_lst_delete(a_head);
 		ft_printf("Stack A: all nodes are freed.\n");
 		ft_lst_delete(b_head);

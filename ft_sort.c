@@ -15,11 +15,13 @@
 t_list	*ft_create_lst_b(void)
 {
 	t_list	*b_head;
-	void		*dummy;
+	// void		*dummy;
 	/*If b_head -> data == NULL, keep getting segfault 11.
 	Possible solution: write a specific struct for dummy head*/
-	dummy = malloc(sizeof(void *));
-	b_head = ft_lst_new(dummy);
+	// dummy = malloc(sizeof(void *));
+	// b_head = ft_lst_new(dummy);
+	b_head = malloc(sizeof(t_list));
+	b_head -> next =
 
 	return (b_head);
 }
@@ -51,4 +53,34 @@ void	ft_swap(t_list **stack_b)
 	tmp_n2 -> next = tmp_n1;
 
 	*stack_b = tmp_n2;
+}
+
+void	ft_rotate(t_list **stack)
+{
+	t_list	*tmp_last;
+	t_list	*tmp_second_to_last;
+	t_list	*tmp_first;
+
+	if (*stack == NULL || (*stack) -> next == NULL)
+		return ;
+	tmp_last = *stack;
+	tmp_first = *stack;
+	tmp_second_to_last = NULL;
+
+	while (tmp_last -> next != NULL)
+	{
+		tmp_second_to_last = tmp_last;
+		tmp_last = tmp_last -> next;
+	}
+
+	tmp_second_to_last -> next = tmp_first;
+	*stack = tmp_last;
+	tmp_last -> next = tmp_first -> next;
+	tmp_first -> next = NULL;
+}
+
+void	ft_rr(t_list **stack_a, t_list **stack_b)
+{
+	ft_rotate(stack_a);
+	ft_rotate(stack_b);
 }
