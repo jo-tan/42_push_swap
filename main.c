@@ -18,12 +18,29 @@
 		else; create new node
  * In case malloc failed in the middle, clear and free the lst and return an error msg*/
 
+int	ft_signal_unclean(t_list *a_head)
+{
+	int	*a1;
+	int	*a2;
+
+	while (a_head -> next != NULL)
+	{
+		a1 = a_head -> data;
+		a2 = a_head -> next -> data;
+		if (*a1 < *a2)
+			a_head = a_head -> next;
+		else
+			return (1);
+	}
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	int	i = 1;
 	t_list	*a_head; // a dummy head
 	t_list	*tail;
-	t_list	*b_head;
+	// t_list	*b_head;
 	int		*nbr = NULL;
 
 	a_head = ft_lst_new(NULL);
@@ -58,18 +75,37 @@ int	main(int ac, char **av)
 		tail = a_head;
 		a_head = a_head -> next;
 		free (tail);
-		b_head = ft_create_lst_b();
-		ft_printf("Stack B is created. head value: %p\n", b_head -> data);
-		ft_pb(&a_head, &b_head);
-		ft_pb(&a_head, &b_head);
-		ft_pb(&a_head, &b_head);
-		ft_swap(&a_head);
-		ft_swap(&b_head);
-		ft_rr(&a_head, &b_head);
+		
+		if (a_head -> next == NULL)
+		{
+			ft_printf("a is already sorted. Nothing is done.\n");
+		}
+		else 
+		{
+			if (*(a_head -> data) < *(a_head -> next -> data))
+			{
+				ft_printf("a1 < a2\n");
+			}
+			else if (*(a_head -> data) > *(a_head -> next -> data))
+			{
+				ft_printf("a1 > a2\n");
+				ft_swap(&a_head);
+				ft_printf("SWAP\n");
+			}
+			else
+			{
+				ft_printf("a1 = a2\n");
+			}
+			// b_head = ft_create_lst_b();
+			// ft_printf("Stack B is created. head value: %p\n", b_head -> data);
+			// ft_pb(&a_head,&b_head);
+			// ft_lst_delete(b_head);
+			// ft_printf("Stack B: all nodes are freed.\n");
+		}
+		ft_printf("Is clean? %i\n", ft_signal_unclean(a_head));
 		ft_lst_delete(a_head);
 		ft_printf("Stack A: all nodes are freed.\n");
-		ft_lst_delete(b_head);
-		ft_printf("Stack B: all nodes are freed.\n");
+		
 	}
 	return (0);
 }

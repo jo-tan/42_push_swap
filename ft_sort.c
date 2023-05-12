@@ -15,13 +15,12 @@
 t_list	*ft_create_lst_b(void)
 {
 	t_list	*b_head;
-	// void		*dummy;
+	int		*dummy;
 	/*If b_head -> data == NULL, keep getting segfault 11.
 	Possible solution: write a specific struct for dummy head*/
-	// dummy = malloc(sizeof(void *));
-	// b_head = ft_lst_new(dummy);
-	b_head = malloc(sizeof(t_list));
-	b_head -> next =
+	dummy = malloc(sizeof(int));
+	*dummy = 0;
+	b_head = ft_lst_new(dummy);
 
 	return (b_head);
 }
