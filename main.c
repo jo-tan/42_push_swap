@@ -18,94 +18,112 @@
 		else; create new node
  * In case malloc failed in the middle, clear and free the lst and return an error msg*/
 
-int	ft_signal_unclean(t_list *a_head)
+int	ft_check_duplicate(t_list **stack_a)
 {
-	int	*a1;
-	int	*a2;
+	t_list	*current;
+	t_list	*runner;
 
-	while (a_head -> next != NULL)
+	current = *stack_a;
+	while (current != NULL)
 	{
-		a1 = a_head -> data;
-		a2 = a_head -> next -> data;
-		if (*a1 < *a2)
-			a_head = a_head -> next;
-		else
-			return (1);
+		runner = current -> next;
+		while (runner != NULL)
+		{
+			if (runner -> data == current -> data)
+			{
+				ft_lst_delete(stack_a);
+				ft_printf("EROOR\n");
+				return (1);
+			}
+			runner = runner -> next;
+		}
+		current = current -> next;
 	}
 	return (0);
 }
 
+int	ft_initial_stack_a(int ac, char **av, t_list **stack_a)
+{
+	int	i;
+	long int	nbr;
+	t_list	*new;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (ft_is_valid_nb(av[i]))
+		{
+			nbr = ft_atoi(av[i]);
+			if (nbr > INT_MAX || nbr < INT_MIN)
+			{
+				ft_lst_delete(stack_a);
+				return (ft_printf("ERROR\n"), 0);
+			}
+			new = ft_lst_new((int)nbr);
+			ft_lstadd_back(stack_a, new);
+		}
+		else
+		{
+			ft_lst_delete(stack_a);
+			return (ft_printf("ERROR\n"), 0);
+		}
+		i++;
+	}
+	if (ft_check_duplicate(stack_a))
+		return (0);
+	ft_label_index(stack_a);
+	return (1);
+}
+
+int	ft_is_clean(t_list **stack_a)
+{
+	t_list	*tmp;
+
+	tmp = *stack_a;
+	while (tmp && tmp -> next)
+	{
+		if (tmp -> data > tmp -> next -> data)
+			return (0);
+		tmp = tmp -> next;
+	}
+	return (1);
+}
+
+void	ft_sort(t_list **stack_a, t_list **stack_b)
+{
+	if (ft_lst_size(*stack_a) < 6)
+		ft_simple_sort(stack_a, stack_b);
+	else
+		radix_sort(stack_a, stack_b);
+}
+
 int	main(int ac, char **av)
 {
-	int	i = 1;
-	t_list	*a_head; // a dummy head
-	t_list	*tail;
-	// t_list	*b_head;
-	int		*nbr = NULL;
+	t_list	**stack_a;
+	t_list	**stack_b;
 
-	a_head = ft_lst_new(NULL);
-	tail = a_head;
-	if (ac <= 1)
+	stack_a = malloc(sizeof(t_list));
+	if (!stack_a)
 		return (0);
-	else
+	stack_b = malloc(sizeof(t_list));
+	if (!stack_b)
+		return (0);
+	*stack_a = NULL;
+	*stack_b = NULL;
+	if (ac == 1)
+		return (0);
+	if (ft_initial_stack_a(ac, av, stack_a) == 0)
+		return (0);
+	if (ft_is_clean(stack_a))
 	{
-		while (i < ac)
-		{
-			if (ft_is_valid_nb(av[i]))
-			{
-				nbr = malloc(sizeof(int));
-				if (!nbr)
-					return (0);
-				*nbr = ft_atoi(av[i]);
-				ft_printf("%i\n", *nbr);
-				tail -> next = ft_lst_new(nbr);
-				tail = tail -> next;
-			}
-			else
-			{
-				tail = a_head;
-				a_head = a_head -> next;
-				free (tail);
-				ft_lst_delete(a_head);
-				ft_printf("ERROR\n");
-				return (0);
-			}
-			i++;
-		}
-		tail = a_head;
-		a_head = a_head -> next;
-		free (tail);
-		
-		if (a_head -> next == NULL)
-		{
-			ft_printf("a is already sorted. Nothing is done.\n");
-		}
-		else 
-		{
-			if (*(a_head -> data) < *(a_head -> next -> data))
-			{
-				ft_printf("a1 < a2\n");
-			}
-			else if (*(a_head -> data) > *(a_head -> next -> data))
-			{
-				ft_printf("a1 > a2\n");
-				ft_swap(&a_head);
-				ft_printf("SWAP\n");
-			}
-			else
-			{
-				ft_printf("a1 = a2\n");
-			}
-			// b_head = ft_create_lst_b();
-			// ft_printf("Stack B is created. head value: %p\n", b_head -> data);
-			// ft_pb(&a_head,&b_head);
-			// ft_lst_delete(b_head);
-			// ft_printf("Stack B: all nodes are freed.\n");
-		}
-		ft_printf("Is clean? %i\n", ft_signal_unclean(a_head));
-		ft_lst_delete(a_head);
-		ft_printf("Stack A: all nodes are freed.\n");
-		
+		ft_print_nodes(*stack_a);
+		ft_lst_delete(stack_a);
+		ft_lst_delete(stack_b);
+		return (0);
 	}
+	ft_sort(stack_a, stack_b);
+	ft_print_nodes(*stack_a);
+	ft_lst_delete(stack_a);
+	ft_lst_delete(stack_b);
 	return (0);
 }

@@ -16,7 +16,7 @@ int	ft_is_valid_nb(const char *nptr)
 {
 	if (!nptr || *nptr == '\0') // Parameter checking
 		return (0);
-	if (*nptr == '+' || *nptr == '-')
+	if ((*nptr == '+' && *(nptr + 1) != '\0') || (*nptr == '-' && *(nptr + 1) != '\0'))
 		nptr++;
 	while (*nptr != '\0')
 	{
@@ -27,11 +27,11 @@ int	ft_is_valid_nb(const char *nptr)
 	return (1);
 }
 
-int	ft_atoi(const char *nptr)
+long int	ft_atoi(const char *nptr)
 {
 	int	i;
 	int	neg_sign;
-	int	res;
+	long int	res;
 
 	i = 0;
 	neg_sign = 0;
@@ -50,7 +50,7 @@ int	ft_atoi(const char *nptr)
 			res = 10 * res + (nptr[i] - '0');
 		i++;
 	}
-	if (neg_sign > 0)
+	if (neg_sign == 1)
 		res *= -1;
 	return (res);
 }

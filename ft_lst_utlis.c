@@ -12,7 +12,7 @@
 
 #include "ft_push_swap.h"
 
-t_list	*ft_lst_new(int *data)
+t_list	*ft_lst_new(int data)
 {
 	t_list	*new;
 
@@ -20,8 +20,19 @@ t_list	*ft_lst_new(int *data)
 	if (!new)
 		return (NULL);
 	new -> data = data;
+	new -> index = -1;
 	new -> next = NULL;
 	return (new);
+}
+
+t_list	*ft_lst_last(t_list *head)
+{
+	t_list	*tmp;
+
+	tmp = head;
+	while (tmp -> next)
+		tmp = tmp -> next;
+	return (tmp);
 }
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
@@ -30,37 +41,63 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	*lst = new;
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **stack, t_list *new)
 {
 	t_list	*ptr;
 
-	ptr = *lst;
-	if (!new)
-		return ;
-	if (!lst)
+	if (*stack)
 	{
-		*lst = new;
-		return ;
+		ptr = ft_lst_last(*stack);
+		ptr -> next = new;
+		//new -> next = NULL; //??
 	}
-	while (ptr -> next != NULL)
-		ptr = ptr -> next;
-	ptr -> next = new;
+	else
+	{
+		*stack = new;
+		(*stack) -> next = NULL; //?
+	}
 }
 
-void	ft_lst_delete(t_list *head)
+int		ft_lst_size(t_list *head)
 {
+	int		size;
+	t_list	*tmp;
+
+	size = 0;
+	tmp = head;
+	while (tmp)
+	{
+		size++;
+		tmp = tmp -> next;
+	}
+	return (size);
+}
+
+void	ft_lst_delete(t_list **stack)
+{
+	t_list	*head;
 	t_list	*tmp;
 	/*if the head -> next is not null, make temp as head and move head -> next,
 	then delete temp.
 	run this until head is NULL*/
-	while (head != NULL)
+	head = *stack;
+	while (head)
 	{
 		tmp = head;
-		ft_printf("%d will be freed\n", *(head -> data));
 		head = head -> next;
-		free(tmp -> data);
 		free(tmp);
 	}
+	free(stack);
 }
 
-/*void	ft_print_nodes(t_list)*/
+void	ft_print_nodes(t_list *head)
+{
+	t_list	*tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		ft_printf("node: %i, index: %i\n", tmp -> data, tmp -> index);
+		tmp = tmp -> next;
+	}
+}
