@@ -6,7 +6,7 @@
 /*   By: jo-tan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:00:57 by jo-tan            #+#    #+#             */
-/*   Updated: 2023/03/28 17:18:45 by jo-tan           ###   ########.fr       */
+/*   Updated: 2023/05/19 18:42:19 by jo-tan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,15 @@ void	ft_lstadd_back(t_list **stack, t_list *new)
 	{
 		ptr = ft_lst_last(*stack);
 		ptr -> next = new;
-		//new -> next = NULL; //??
 	}
 	else
 	{
 		*stack = new;
-		(*stack) -> next = NULL; //?
+		(*stack)-> next = NULL;
 	}
 }
 
-int		ft_lst_size(t_list *head)
+int	ft_lst_size(t_list *head)
 {
 	int		size;
 	t_list	*tmp;
@@ -71,33 +70,4 @@ int		ft_lst_size(t_list *head)
 		tmp = tmp -> next;
 	}
 	return (size);
-}
-
-void	ft_lst_delete(t_list **stack)
-{
-	t_list	*head;
-	t_list	*tmp;
-	/*if the head -> next is not null, make temp as head and move head -> next,
-	then delete temp.
-	run this until head is NULL*/
-	head = *stack;
-	while (head)
-	{
-		tmp = head;
-		head = head -> next;
-		free(tmp);
-	}
-	free(stack);
-}
-
-void	ft_print_nodes(t_list *head)
-{
-	t_list	*tmp;
-
-	tmp = head;
-	while (tmp)
-	{
-		ft_printf("node: %i, index: %i\n", tmp -> data, tmp -> index);
-		tmp = tmp -> next;
-	}
 }

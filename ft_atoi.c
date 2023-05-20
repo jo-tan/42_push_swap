@@ -6,7 +6,7 @@
 /*   By: jo-tan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:44:05 by jo-tan            #+#    #+#             */
-/*   Updated: 2022/11/16 16:59:48 by jo-tan           ###   ########.fr       */
+/*   Updated: 2023/05/19 18:33:13 by jo-tan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	ft_is_valid_nb(const char *nptr)
 {
-	if (!nptr || *nptr == '\0') // Parameter checking
+	if (!nptr || *nptr == '\0')
 		return (0);
-	if ((*nptr == '+' && *(nptr + 1) != '\0') || (*nptr == '-' && *(nptr + 1) != '\0'))
+	if ((*nptr == '+' && *(nptr + 1) != '\0')
+		|| (*nptr == '-' && *(nptr + 1) != '\0'))
 		nptr++;
 	while (*nptr != '\0')
 	{
@@ -29,8 +30,8 @@ int	ft_is_valid_nb(const char *nptr)
 
 long int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	neg_sign;
+	int			i;
+	int			neg_sign;
 	long int	res;
 
 	i = 0;
